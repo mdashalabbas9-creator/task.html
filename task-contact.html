@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact - Intern Task</title>
+    <style>
+      :root{ --bg0:#070713; --bg1:#0c1027; --text:#e9e7ff; --muted: rgba(233,231,255,.75); --border: rgba(255,255,255,.12); --accent:#a855f7; --accent2:#ec4899; --shadow: 0 18px 60px rgba(168,85,247,.22); }
+      *{ box-sizing:border-box; }
+      body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:var(--text);
+        background: radial-gradient(1200px 700px at 15% 10%, rgba(168,85,247,.22), transparent 55%),
+                    radial-gradient(900px 600px at 85% 20%, rgba(236,72,153,.16), transparent 55%),
+                    linear-gradient(180deg, var(--bg0), var(--bg1)); }
+      .nav{ position: sticky; top:0; z-index:50; backdrop-filter: blur(10px); background: rgba(8,10,24,.55); border-bottom: 1px solid rgba(255,255,255,.08);} 
+      .nav-inner{ max-width:1100px; margin:0 auto; padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+      .brand{ display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text);} 
+      .logo{ width:36px; height:36px; border-radius:12px; background: linear-gradient(135deg, rgba(168,85,247,.95), rgba(236,72,153,.95)); position:relative; overflow:hidden; box-shadow: 0 10px 35px rgba(168,85,247,.25);} 
+      .logo::after{ content:""; position:absolute; inset:-80px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transform: rotate(25deg); animation: shimmer 3s ease-in-out infinite; }
+      .nav-links{ display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end; }
+      .nav-links a{ text-decoration:none; color:var(--muted); font-weight:650; padding:10px 12px; border-radius:12px; border:1px solid transparent; transition: transform .15s ease, background .2s ease, border-color .2s ease, color .2s ease;} 
+      .nav-links a:hover{ transform: translateY(-1px); color:var(--text); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14);} 
+
+      .container{ max-width:1100px; margin:0 auto; padding:26px 18px 64px; }
+      .page-in{ animation: pageIn .7s ease both; }
+      @keyframes pageIn{ from{ opacity:0; transform: translateY(14px);} to{ opacity:1; transform: translateY(0);} }
+
+      .hero{ margin-top:18px; display:grid; grid-template-columns: 1.05fr .95fr; gap:22px; align-items:start; }
+      @media(max-width:900px){ .hero{ grid-template-columns:1fr; } }
+
+      h1{ margin:0; font-size: clamp(30px,4vw,48px); letter-spacing:-1px; line-height:1.05; }
+      .grad-text{ background: linear-gradient(90deg, rgba(168,85,247,1), rgba(236,72,153,1)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+      p{ margin:14px 0 18px; color:var(--muted); line-height:1.7; font-size:16px; }
+
+      .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:11px 14px; border-radius:14px; text-decoration:none; font-weight:800; color:#0b0c16; background: linear-gradient(135deg, rgba(168,85,247,.95), rgba(236,72,153,.95)); box-shadow: 0 16px 44px rgba(168,85,247,.22); border:1px solid rgba(255,255,255,.18); transition: transform .12s ease, box-shadow .2s ease, filter .2s ease; }
+      .btn:hover{ transform: translateY(-1px); filter:saturate(1.1); box-shadow: var(--shadow);} 
+      .ghost{ display:inline-flex; align-items:center; justify-content:center; padding:11px 14px; border-radius:14px; text-decoration:none; font-weight:800; color:var(--text); border:1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.06); transition: transform .12s ease, background .2s ease;} 
+      .ghost:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09);} 
+
+      .form-card{ border-radius:18px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.06); padding: 16px; position:relative; overflow:hidden; }
+      .form-card::before{ content:""; position:absolute; inset:-2px; background: radial-gradient(600px 260px at 25% 0%, rgba(168,85,247,.18), transparent 54%), radial-gradient(500px 260px at 95% 30%, rgba(236,72,153,.14), transparent 55%); pointer-events:none; }
+      .form-card > *{ position:relative; }
+
+      label{ display:block; color: var(--muted); font-weight:750; margin-top:12px; font-size:13px; }
+      input, textarea{
+        width:100%;
+        margin-top:8px;
+        background: rgba(0,0,0,.12);
+        border:1px solid rgba(255,255,255,.14);
+        border-radius: 14px;
+        color: var(--text);
+        padding: 12px 12px;
+        outline:none;
+        transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
+        font-size: 14.5px;
+      }
+      textarea{ min-height: 120px; resize: vertical; }
+      input:focus, textarea:focus{ border-color: rgba(168,85,247,.55); box-shadow: 0 0 0 4px rgba(168,85,247,.22); background: rgba(255,255,255,.06); }
+      ::placeholder{ color: rgba(233,231,255,.45); }
+
+      .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      @media(max-width:700px){ .grid-2{ grid-template-columns:1fr; } }
+
+      .contact-cards{ margin-top: 18px; display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+      @media(max-width:980px){ .contact-cards{ grid-template-columns:1fr; } }
+      .card{ border-radius:18px; border:1px solid rgba(255,255,255,.10); background: rgba(255,255,255,.06); padding: 16px; transition: transform .18s ease, border-color .2s ease, background .2s ease; }
+      .card:hover{ transform: translateY(-3px); border-color: rgba(168,85,247,.35); background: rgba(255,255,255,.08);} 
+      .icon{ width:42px; height:42px; border-radius:14px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); display:flex; align-items:center; justify-content:center; font-size:18px; }
+      h3{ margin:10px 0 8px; font-size:16px; letter-spacing:-.2px; }
+      .reveal{ animation: fadeUp .75s ease both; }
+      @keyframes fadeUp{ from{ opacity:0; transform: translateY(18px);} to{ opacity:1; transform: translateY(0);} }
+      footer{ border-top:1px solid rgba(255,255,255,.08); padding:26px 18px; color:var(--muted); text-align:center; }
+      @keyframes shimmer{ 0%{ transform: translateX(-40%) rotate(25deg); opacity:0; } 10%{ opacity:.8;} 50%{ opacity:.35;} 100%{ transform: translateX(40%) rotate(25deg); opacity:0;} }
+      button{ border:none; cursor:pointer; }
+    </style>
+  </head>
+  <body>
+    <nav class="nav">
+      <div class="nav-inner">
+        <a class="brand" href="task.html">
+          <div class="logo" aria-hidden="true"></div>
+          <strong>Intern Task</strong>
+        </a>
+        <div class="nav-links">
+          <a href="task-about.html">About</a>
+          <a href="task-services.html">Services</a>
+          <a href="task-contact.html">Contact</a>
+          <a href="task.html">Home</a>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container page-in">
+      <section class="hero">
+        <div class="reveal" style="animation-delay:60ms">
+          <h1>Let’s build something <span class="grad-text">awesome</span></h1>
+          <p>
+            This contact form is static (no backend). It’s here to match the UI feel.
+            Navigation and buttons link to separate pages.
+          </p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn" href="task-services.html">View Services →</a>
+            <a class="ghost" href="task-about.html">About</a>
+          </div>
+        </div>
+
+        <aside class="form-card reveal" style="animation-delay:140ms">
+          <div class="grid-2">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="Your name" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" placeholder="you@example.com" type="email" />
+            </div>
+          </div>
+
+          <label for="topic">Topic</label>
+          <input id="topic" name="topic" placeholder="Website / Landing / UI" />
+
+          <label for="msg">Message</label>
+          <textarea id="msg" name="msg" placeholder="Write your message..." ></textarea>
+
+          <div style="margin-top:14px; display:flex; gap:12px; flex-wrap:wrap;">
+            <a class="btn" href="task.html" style="text-decoration:none;">Send (demo) →</a>
+            <a class="ghost" href="task-contact.html">Reset</a>
+          </div>
+        </aside>
+      </section>
+
+      <h2 class="section-title reveal" style="margin:52px 0 18px; animation-delay:220ms;">Contact options</h2>
+
+      <section class="contact-cards" aria-label="Contact cards">
+        <article class="card reveal" style="animation-delay:240ms">
+          <div class="icon" aria-hidden="true">📍</div>
+          <h3>Location</h3>
+          <p>Remote-friendly • Global teams • Fast turnaround.</p>
+        </article>
+        <article class="card reveal" style="animation-delay:280ms">
+          <div class="icon" aria-hidden="true">📧</div>
+          <h3>Email</h3>
+          <p>hello@example.com (replace with your real email).</p>
+        </article>
+        <article class="card reveal" style="animation-delay:320ms">
+          <div class="icon" aria-hidden="true">⏱️</div>
+          <h3>Response time</h3>
+          <p>Usually within 24 hours. (UI demo text)</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>© <span id="y"></span> Intern Task • HTML + CSS</footer>
+    <script>
+      document.getElementById('y').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
+
